@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "12548592223",
+    "firebase_url": "https://carbuddies-b121e.firebaseio.com",
+    "project_id": "carbuddies-b121e",
+    "storage_bucket": "carbuddies-b121e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12548592223:android:8e51bc089bf16ac2",
+        "android_client_info": {
+          "package_name": "ankit.applespace.carbuddies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12548592223-a0170d43ihtr2g8h2151cu9s0vtgcfui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ankit.applespace.carbuddies",
+            "certificate_hash": "5900c4051a4c44354c23541988287e13979ab5fc"
+          }
+        },
+        {
+          "client_id": "12548592223-bv35pvk3d7ih9dfqd3eapqtugo58e9h6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_xotY6g8UirpbW_ewU1aAmvNyMhH_QME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12548592223-bv35pvk3d7ih9dfqd3eapqtugo58e9h6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

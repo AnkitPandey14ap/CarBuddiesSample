@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/mtf_cardHeight_final"
+    tools:context="ankit.applespace.carbuddies.Activities.NameActivity">
+
+
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:hint="Enter your name"/>
+
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+<!--
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mtf_labelColor="#666"
+        app:mtf_image="@drawable/avtar_icon"
+        android:layout_gravity="center_horizontal"
+        >
+
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+-->
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/next"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/ic_done_black_24dp"
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip"
+            android:layout_gravity="center_horizontal"/>
+
+    </FrameLayout>
+
+
+</LinearLayout>

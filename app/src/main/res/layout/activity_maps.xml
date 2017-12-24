@@ -1,0 +1,28 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
+
+    <fragment
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+
+    <com.hanks.htextview.rainbow.RainbowTextView
+        android:id="@+id/rainbowTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="4568"
+        android:textSize="30sp"
+        app:colorSpace="150dp"
+        app:colorSpeed="4dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"/>
+
+</RelativeLayout>

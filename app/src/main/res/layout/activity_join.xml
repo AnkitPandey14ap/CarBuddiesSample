@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ankit.applespace.carbuddies.Activities.JoinActivity">
+
+
+
+    <com.raycoarana.codeinputview.CodeInputView
+        android:id="@+id/codeInput"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:underline_color="#457ad1"
+        app:underline_selected_color="#9e1ace"
+        app:code_text_color="#b12eff"
+        app:error_color="#77ce9d"
+        app:input_type="numeric"
+        app:length_of_code="4"
+        app:animate_on_complete="false"
+        app:code_text_size="@dimen/mtf_cardHeight_final"
+        app:underline_width="@dimen/mtf_cardHeight_final"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

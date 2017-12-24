@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Car Buddies</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="dialog_message">share this code with others</string>
+</resources>
