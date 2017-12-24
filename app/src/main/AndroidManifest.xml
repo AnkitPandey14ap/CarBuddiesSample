@@ -33,7 +33,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAnBWaJuBYqQ3rRLvPo0_9SqzO9q3Ru50A" />
 
         <activity
             android:name="ankit.applespace.carbuddies.Activities.MapsActivity"
