@@ -211,7 +211,7 @@ public class CreateActivity extends AppCompatActivity {
                         Intent intent = new Intent(CreateActivity.this, MapsActivity.class);
                         intent.putExtra("CODE",spClass.getValue("CODE"));
                         startActivity(intent);
-                        finish();
+
                     }
                 })
                 .setNegativeButton("Share", new DialogInterface.OnClickListener() {
