@@ -43,7 +43,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private void isCodeRight(final String code) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref=ref.child("message");
+        ref=ref.child("Codes");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

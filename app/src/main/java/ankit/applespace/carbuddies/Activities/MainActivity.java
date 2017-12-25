@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     SpClass spClass;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    DatabaseReference myRef = database.getReference("Codes");
 
     LocationManager locationManager;
     private double lat;

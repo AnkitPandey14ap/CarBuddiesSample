@@ -80,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private float DEFAULT_ZOOM=15;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    DatabaseReference myRef = database.getReference("Codes");
     private ArrayList<User> users=new ArrayList<>();
 
 //    String userName;
@@ -715,6 +715,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onClick(DialogInterface dialogInterface, int i) {
                         spClass.setValue("CODE",null);
                         if (mGoogleApiClient != null) {
+                            myRef.child(spClass.getValue("ID")).removeValue();
                             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MapsActivity.this);
                         }
                         finish();
