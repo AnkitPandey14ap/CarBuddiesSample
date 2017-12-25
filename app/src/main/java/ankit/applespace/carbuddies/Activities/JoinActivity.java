@@ -72,7 +72,7 @@ public class JoinActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(JoinActivity.this,CreateActivity.class));
+        startActivity(new Intent(JoinActivity.this,MainActivity.class));
         finish();
     }
 }

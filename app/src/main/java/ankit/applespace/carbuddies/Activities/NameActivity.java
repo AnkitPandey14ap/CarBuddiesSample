@@ -39,7 +39,7 @@ public class NameActivity extends Activity {
                     Toast.makeText(NameActivity.this, "Enter Your Name", Toast.LENGTH_SHORT).show();
                     userName.requestFocus();
                 } else {
-                    Intent intent = new Intent(NameActivity.this, CreateActivity.class);
+                    Intent intent = new Intent(NameActivity.this, MainActivity.class);
                     intent.putExtra("USER", name);
                     sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = sp.edit();

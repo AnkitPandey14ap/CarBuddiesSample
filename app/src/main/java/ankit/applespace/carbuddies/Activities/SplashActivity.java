@@ -21,6 +21,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         spClass = new SpClass(this);
+        if(spClass.getValue("NAME")==null){
+            spClass.setValue("NAME","unknown");
+        }
         if(spClass.getValue("CODE")!=null){
             startActivity(new Intent(SplashActivity.this,MapsActivity.class));
             finish();
@@ -31,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent=new Intent(SplashActivity.this,CreateActivity.class);
+                    Intent intent=new Intent(SplashActivity.this,MainActivity.class);
                     //intent.putExtra("NAME", userName);
                     startActivity(intent);
                     finish();

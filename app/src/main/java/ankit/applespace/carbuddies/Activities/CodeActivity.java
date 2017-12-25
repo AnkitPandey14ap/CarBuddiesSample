@@ -45,14 +45,11 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(CodeActivity.this, CreateActivity.class));
+        startActivity(new Intent(CodeActivity.this, MainActivity.class));
         finish();
     }
 }
