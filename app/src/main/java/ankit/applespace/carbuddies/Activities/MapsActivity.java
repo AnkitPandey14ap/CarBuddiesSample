@@ -83,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DatabaseReference myRef = database.getReference("Codes");
     private ArrayList<User> users=new ArrayList<>();
 
-//    String userName;
     SpClass spClass;
 
     boolean isLocationSet = false;
@@ -104,9 +103,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RainbowTextView rainbowTextView = findViewById(R.id.rainbowTextView);
         rainbowTextView.setText(spClass.getValue("CODE"));
 
-//        userName=getIntent().getStringExtra("NAME");
-//        Toast.makeText(this, userName, Toast.LENGTH_SHORT).show();
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -118,7 +114,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     users.add(user);
                     Log.i(TAG, "onDataChange: "+users.size());
 
-
                 }
 
                 updateRoute(users);
@@ -127,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Log.i(TAG, "onDataChange: cancelled");
+//                Log.i(TAG, "onDataChange: cancelled");
             }
         });
 
@@ -244,94 +239,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
 
 
-//        LatLng delhi = new LatLng(19.01, 76.9499);
-//        mMap.addMarker(new MarkerOptions().position(delhi).title("Marker in Delhi"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-
-
-
-
-
-
-        //start for distance
-        // Setting onclick event listener for the map
-        /*mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-            @Override
-            public void onMapClick(LatLng point) {
-
-                // Already two locations
-                if (MarkerPoints.size() > 1) {
-                    MarkerPoints.clear();
-                    mMap.clear();
-                }
-                }
-
-                // Adding new item to the ArrayList
-                MarkerPoints.add(point);
-
-                // Creating MarkerOptions
-                MarkerOptions options = new MarkerOptions();
-
-                // Setting the position of the marker
-                options.position(point);
-
-                *//**
-                 * For the start location, the color of marker is GREEN and
-                 * for the end location, the color of marker is RED.
-                 *//*
-                if (MarkerPoints.size() == 1) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                } else if (MarkerPoints.size() == 2) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
-
-
-                // Add new marker to the Google Map Android API V2
-                mMap.addMarker(options);
-
-                // Checks, whether start and end locations are captured
-                if (MarkerPoints.size() >= 1) {
-//                    LatLng origin = MarkerPoints.get(0);
-                    LatLng o = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-
-                    for (int i = 0; i <MarkerPoints.size() ; i++) {
-                        LatLng dest = MarkerPoints.get(i);
-                        String url = getUrl(o, dest);
-                        Log.d("onMapClick", url.toString());
-                        FetchUrl FetchUrl = new FetchUrl();
-
-                        // Start downloading json data from Google Directions API
-                        FetchUrl.execute(url);
-
-
-                    }
-
-                    LatLng dest = MarkerPoints.get(0);
-
-
-                    // Getting URL to the Google Directions API
-                    *//*String url = getUrl(o, dest);
-                    Log.d("onMapClick", url.toString());
-                    FetchUrl FetchUrl = new FetchUrl();
-
-                    // Start downloading json data from Google Directions API
-                    FetchUrl.execute(url);
-*//*
-
-                    //move map camera
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(o));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-                }
-
-            }
-        });
-
-
-*/
-
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
@@ -352,42 +259,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(MapsActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
-
             return;
-        }
-//        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-/*
-        double lat;
-        double lng;
-        if(location!=null){
-            lat = location.getLatitude();
-            lng = location.getLongitude();
-
-            Log.i(TAG, "Latitude: "+lat);
-            Log.i(TAG, "Longtitude: "+lng);*/
-//            Toast.makeText(this, "dfd"+lat, Toast.LENGTH_SHORT).show();
-
-
-//        sydney = new LatLng(lat, lng);
-
-//        LatLng delhi = new LatLng(location.getLatitude(), location.getLongitude());
-
-
-//        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-
-//        mMap.addMarker(new MarkerOptions().position(delhi).title("Marker in Delhi"));
-
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(delhi));
-//            mMap.getMaxZoomLevel();
-//            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-/*
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(location.getLatitude(),
-                        location.getLongitude()), DEFAULT_ZOOM));*/
 
         }
+    }
 
 
 
@@ -438,10 +313,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
-
-
     }
 
     @Override
@@ -459,22 +330,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
             x++;
         Log.i(TAG, "onLocationChanged: "+x+":  "+location);
-//        Toast.makeText(this, "Location Changed: "+x+":  "+location, Toast.LENGTH_SHORT).show();
-
-        //myRef.setValue("Hello, World!");
-
 
         User user=new User(spClass.getValue("NAME"),location.getLatitude(),location.getLongitude(),spClass.getValue("ID"));
 
-//        myRef.child("Lat").setValue(new LatlngModel(location.getLatitude(),location.getLongitude()));
-//        myRef.child("Lat").setValue(location.getLatitude());
         myRef.child(spClass.getValue("ID")).setValue(user);
 
         mLastLocation = location;
-        /*mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(mLastLocation.getLatitude(),
-                        mLastLocation.getLongitude()), DEFAULT_ZOOM));
-*/
+
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
@@ -490,29 +352,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(!isLocationSet){
             isLocationSet = true;
-//            move map camera
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
 
         }
 
-
-
         //stop location updates
         if (mGoogleApiClient != null) {
             //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
-/*
-        float[] results = new float[1];
-        Location.distanceBetween(latLng.latitude, latLng.longitude,
-                sydney.latitude, sydney.longitude,
-                results);
-
-        Log.i(TAG, "onLocationChanged: "+results[0]);
-
-
-        */
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -596,12 +445,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return data;
     }
-
-
-
-
-
-
 
 
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {

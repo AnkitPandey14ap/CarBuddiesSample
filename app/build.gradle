@@ -6,8 +6,8 @@ android {
         applicationId "ankit.applespace.carbuddies"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,7 +38,10 @@ dependencies {
 
     compile "com.hanks:htextview-base:0.1.2"
     compile "com.hanks:htextview-rainbow:0.1.2"
+    compile 'com.github.medyo:fancybuttons:1.8.4'
 
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+

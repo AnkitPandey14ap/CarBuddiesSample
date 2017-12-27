@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import ankit.applespace.carbuddies.JavaPackage.SpClass;
 import ankit.applespace.carbuddies.R;
@@ -20,11 +21,16 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
+
+
         spClass = new SpClass(this);
         if(spClass.getValue("NAME")==null){
-            spClass.setValue("NAME","unknown");
+            startActivity(new Intent(SplashActivity.this,NameActivity.class));
+            finish();
+//            spClass.setValue("NAME","unknown");
         }
-        if(spClass.getValue("CODE")!=null){
+        else if(spClass.getValue("CODE")!=null){
             startActivity(new Intent(SplashActivity.this,MapsActivity.class));
             finish();
         }else {

@@ -56,7 +56,7 @@ public class JoinActivity extends AppCompatActivity {
                     finish();
                 } else {
 
-                    Toast.makeText(JoinActivity.this, "Wrong CODE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "Invalid CODE", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(JoinActivity.this,JoinActivity.class));
                 }

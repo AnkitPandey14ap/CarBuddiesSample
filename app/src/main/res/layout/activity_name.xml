@@ -49,8 +49,9 @@
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/ic_done_black_24dp"
-            app:cb_color="#99CC00"
+            app:cb_color="@color/main_color"
             app:cb_pressedRingWidth="8dip"
+            android:layout_marginTop="40sp"
             android:layout_gravity="center_horizontal"/>
 
     </FrameLayout>

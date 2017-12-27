@@ -1,10 +1,13 @@
 package ankit.applespace.carbuddies.Activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,11 +31,20 @@ public class NameActivity extends Activity {
         userName = findViewById(R.id.userName);
         next = findViewById(R.id.next);
 
+
+
+        ActivityCompat.requestPermissions(NameActivity.this,
+                new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.ACCESS_FINE_LOCATION},
+                1);
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String name=userName.getText().toString().trim();
+
+
 
                 if (TextUtils.isEmpty(name)) {
                     userName.setError("Enter your name");
@@ -46,8 +58,6 @@ public class NameActivity extends Activity {
                     editor.putString("NAME", name);
                     editor.commit();
 
-
-
                     startActivity(intent);
                     finish();
                 }
@@ -57,8 +67,4 @@ public class NameActivity extends Activity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        /*super.onBackPressed();*/
-    }
 }

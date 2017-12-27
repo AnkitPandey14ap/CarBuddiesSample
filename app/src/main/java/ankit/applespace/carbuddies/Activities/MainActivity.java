@@ -15,7 +15,9 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.ShareActionProvider;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -42,12 +44,14 @@ import java.util.Random;
 import ankit.applespace.carbuddies.JavaPackage.SpClass;
 import ankit.applespace.carbuddies.Model.User;
 import ankit.applespace.carbuddies.R;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button createBtn;
-    private Button joinBtn;
+    private FancyButton createBtn;
+    private FancyButton joinBtn;
+    private FancyButton continueBtn;
     private TextView usernameTV;
     private String TAG="Ankit";
 
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     LocationManager locationManager;
     private double lat;
     private double lng;
-
+    private ShareActionProvider mShareActionProvider;
 
 
     @Override
@@ -78,21 +82,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
-        //here
-
-
         spClass = new SpClass(this);
+
+        /*
+        View headerView = navigationView.getHeaderView(0);
+        TextView usernameTVNav = headerView.findViewById(R.id.usernameTV);
+        usernameTVNav.setText(spClass.getValue("NAME"));*/
+
 
         usernameTV = findViewById(R.id.usernameTV);
         usernameTV.setText("Hello, "+spClass.getValue("NAME")+"!");
 
         //it will be used only one time to get the user's Name
         final String userName = spClass.getValue("NAME");
-        if (userName == "unknown") {
+        if (userName.equals("null")) {
             startActivity(new Intent(MainActivity.this, NameActivity.class));
+            finish();
         }
 
 
@@ -101,11 +106,15 @@ public class MainActivity extends AppCompatActivity
 
         createBtn = findViewById(R.id.createBtn);
         joinBtn = findViewById(R.id.joinBtn);
+        continueBtn = findViewById(R.id.continueBtn);
 
 
         final TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
 
-        Log.d("Ankit", "Android ID: " + Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        //Log.d("Ankit", "Android ID: " + Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -138,7 +147,10 @@ public class MainActivity extends AppCompatActivity
 
             return;
         }
-        Log.d("Ankit", "Device ID : " + tm.getDeviceId());
+
+
+
+        //Log.d("Ankit", "Device ID : " + tm.getDeviceId());
         spClass.setValue("ID", tm.getDeviceId());
 
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +214,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,MapsActivity.class));
+                finish();
+            }
+        });
+
     }
 
     private void showCodeDialog() {
@@ -216,12 +236,43 @@ public class MainActivity extends AppCompatActivity
                         Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                         intent.putExtra("CODE",spClass.getValue("CODE"));
                         startActivity(intent);
+                        finish();
 
                     }
                 })
                 .setNegativeButton("Share", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        try {
+
+                            createBtn.setVisibility(View.INVISIBLE);
+                            joinBtn.setVisibility(View.INVISIBLE);
+                            continueBtn.setVisibility(View.VISIBLE);
+
+
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies");
+
+                            String code = spClass.getValue("CODE");
+                            intent.putExtra(Intent.EXTRA_TEXT, code);
+                            intent.putExtra("CODE",code);
+
+                            String shareBody="Hey, I want to share my live location with you! Please install the CAR BUDDIES app so that we can track each others location with best route between us \nAndroi: \n";
+                            shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
+
+                            shareBody =shareBody+"If already installed \n";
+                            shareBody=shareBody+"http://www.ankit.applespace.carbuddies/login\n\n";
+
+                            shareBody=shareBody+"Start app, go to Join Group and enter code \""+spClass.getValue("CODE")+"\"";
+
+                            intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                            startActivity(Intent.createChooser(intent, "choose one"));
+                        } catch(Exception e) {
+                            Log.i(TAG, "onClick: "+"somthing went wrong");
+                        }
+
 
                     }
                 });
@@ -299,7 +350,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.shareButton);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+//        String shareBody = "\nLet me recommend you this application\n\n";
+//        shareBody = shareBody+"http://www.my.app.com/launch"+"https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Car Buddies");
+
+//        shareBody =shareBody+ "http://www.ankit.applespace.carbuddies/login";
+
+        String shareBody = "Now don't need to bother if you lost your friend's vehicle while driving just see their exact location in CAR BUDDIES app, if they are near by or not \n\nThe best app to share your real-time location with friends while driving, where all your friends/family can see each others location at the same time \n\nInstall the Android app \n";
+        shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
+
+/*
+        shareBody=shareBody+"if Android app is already installed \n";
+        shareBody=shareBody+"http://www.ankit.applespace.carbuddies/login";
+*/
+
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+        //then set the sharingIntent
+        mShareActionProvider.setShareIntent(sharingIntent);
+
         return true;
     }
 
@@ -312,6 +386,20 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies 1");
+
+                String shareBody = "Now don't need to bother if you lost your friend's vehicle while driving just see in CAR BUDDIES app their exact location, if they are near or not \n\n\nThe best app to share your real-time location with friends while driving, where all of your friends can see each others location at the same time \n\nInstall the Android app \n";
+                shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
+
+//                String sAux = "https://www.ankit.com";
+                i.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                Toast.makeText(this, "Somthing went wrong", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
@@ -324,17 +412,35 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_share) {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies");
 
-        } else if (id == R.id.nav_manage) {
+                String shareBody = "Now don't need to bother if you lost your friend's vehicle on the road while you all are going somewhere by different vehicles, just see their exact location in CAR BUDDIES app, if they are near by or not \n\nThe best app to share your real-time location with friends while driving, where all your friends/family can see each others location at the same time \n\nInstall the Android app \n";
+                shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
 
-        } else if (id == R.id.nav_share) {
+
+                i.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                Toast.makeText(this, "Somthing went wrong", Toast.LENGTH_SHORT).show();;
+            }
 
         } else if (id == R.id.nav_send) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"3applespace@gmail.com"});
+//        i.putExtra(Intent.EXTRA_EMAIL  , arrayList);
+            i.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies Feedback");
+//            i.putExtra(Intent.EXTRA_TEXT   , feedbackEditText.getText().toString());
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
 
         }
 
