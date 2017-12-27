@@ -1,6 +1,9 @@
 package ankit.applespace.carbuddies.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -33,7 +36,13 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onCompleted(String code) {
                 //check if submitted code is right or wrong
-                isCodeRight(code);
+
+                if(isNetworkAvailable())
+                    isCodeRight(code);
+                else
+                    Toast.makeText(JoinActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+
+
 
             }
         });
@@ -68,6 +77,13 @@ public class JoinActivity extends AppCompatActivity {
                 Toast.makeText(JoinActivity.this, "Internet Issue", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override

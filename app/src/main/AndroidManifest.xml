@@ -76,9 +76,6 @@
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Activities.ConfirmationActivity">
-
-        </activity>
     </application>
 
 </manifest>
