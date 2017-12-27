@@ -37,8 +37,9 @@ dependencies {
 
 
     compile "com.hanks:htextview-base:0.1.2"
-    compile "com.hanks:htextview-rainbow:0.1.2"
+    compile "com.hanks:htextview-typer:0.1.2"
     compile 'com.github.medyo:fancybuttons:1.8.4'
+
 
 }
 

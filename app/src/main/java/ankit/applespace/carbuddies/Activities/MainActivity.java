@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity
                             shareBody =shareBody+"If already installed \n";
                             shareBody=shareBody+"http://www.ankit.applespace.carbuddies/login\n\n";
 
-                            shareBody=shareBody+"Start app, go to Join Group and enter code \""+spClass.getValue("CODE")+"\"";
+                            shareBody=shareBody+"Start app, go to JOIN GROUP and enter the code \""+spClass.getValue("CODE")+"\"";
 
                             intent.putExtra(Intent.EXTRA_TEXT, shareBody);
                             startActivity(Intent.createChooser(intent, "choose one"));

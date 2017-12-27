@@ -2,7 +2,7 @@
     <string name="app_name">Car Buddies</string>
     <string name="title_activity_maps">Map</string>
     <string name="dialog_message">share this code with others</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Car Buddies</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

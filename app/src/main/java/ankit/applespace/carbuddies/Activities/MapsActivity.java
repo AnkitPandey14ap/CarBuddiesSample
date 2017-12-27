@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -18,6 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -47,7 +50,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hanks.htextview.rainbow.RainbowTextView;
+import com.hanks.htextview.typer.TyperTextView;
+
 
 import org.json.JSONObject;
 
@@ -100,8 +104,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spClass = new SpClass(this);
         myRef=myRef.child(spClass.getValue("CODE"));
 
-        RainbowTextView rainbowTextView = findViewById(R.id.rainbowTextView);
+        TyperTextView rainbowTextView = findViewById(R.id.rainbowTextView);
         rainbowTextView.setText(spClass.getValue("CODE"));
+        rainbowTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies");
+
+                    String code = spClass.getValue("CODE");
+                    intent.putExtra(Intent.EXTRA_TEXT, code);
+                    intent.putExtra("CODE",code);
+
+                    String shareBody="Hey, I want to share my live location with you! Please install the CAR BUDDIES app so that we can track each others location with best route between us \nAndroi: \n";
+                    shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
+
+                    shareBody =shareBody+"If already installed \n";
+                    shareBody=shareBody+"http://www.ankit.applespace.carbuddies/login\n\n";
+
+                    shareBody=shareBody+"Start app, go to JOIN GROUP and enter the code \""+spClass.getValue("CODE")+"\"";
+
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                    startActivity(Intent.createChooser(intent, "choose one"));
+                } catch(Exception e) {
+                    Log.i(TAG, "onClick: "+"somthing went wrong");
+                }
+            }
+        });
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -573,5 +605,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         AlertDialog dialog=builder.create();
         dialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        spClass.setValue("CODE",null);
+        if (mGoogleApiClient != null) {
+            myRef.child(spClass.getValue("ID")).removeValue();
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MapsActivity.this);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        spClass.setValue("CODE",null);
+        if (mGoogleApiClient != null) {
+            myRef.child(spClass.getValue("ID")).removeValue();
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MapsActivity.this);
+        }
+        super.finish();
     }
 }
