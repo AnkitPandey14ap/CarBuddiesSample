@@ -39,8 +39,11 @@ public class JoinActivity extends AppCompatActivity {
 
                 if(isNetworkAvailable())
                     isCodeRight(code);
-                else
+                else{
                     Toast.makeText(JoinActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(JoinActivity.this,JoinActivity.class));
+                }
 
 
 
@@ -74,7 +77,7 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Toast.makeText(JoinActivity.this, "Internet Issue", Toast.LENGTH_SHORT).show();
+                Toast.makeText(JoinActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

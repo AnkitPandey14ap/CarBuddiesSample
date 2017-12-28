@@ -56,8 +56,19 @@
             fancy:fb_defaultColor="@color/main_color"
             fancy:fb_focusColor="#9bd823"
             fancy:fb_radius="30dp"
-            fancy:fb_textColor="#FFFFFF"/>
+            fancy:fb_textColor="#FFFFFF">
 
+        </mehdi.sakout.fancybuttons.FancyButton>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

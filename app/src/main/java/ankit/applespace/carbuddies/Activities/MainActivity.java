@@ -29,10 +29,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private FancyButton continueBtn;
     private TextView usernameTV;
     private String TAG="Ankit";
+    private ProgressBar progressBar;
 
     SpClass spClass;
 
@@ -64,6 +68,8 @@ public class MainActivity extends AppCompatActivity
     private double lat;
     private double lng;
     private ShareActionProvider mShareActionProvider;
+    private Random random;
+    private String code;
 
 
     @Override
@@ -171,8 +177,39 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
 
-                Random random = new Random();
-                final String code = String.format("%04d", random.nextInt(10000));
+                //Show progress bar untill background work is done
+                progressBar = findViewById(R.id.progressBar);
+                setProgressBarVisible();
+
+                random = new Random();
+                code = String.format("%04d", random.nextInt(10000));
+
+
+
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        while(dataSnapshot.child(code).exists()) {
+                            code = String.format("%04d", random.nextInt(10000));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                        Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
+
+
+
+
+
 
                 getLocation();
 
@@ -189,18 +226,49 @@ public class MainActivity extends AppCompatActivity
                                 flag[0] =false;
                                 spClass.setValue("CODE", code);
                                 myRef.child(spClass.getValue("CODE")).child(spClass.getValue("ID")).setValue(new User(spClass.getValue("NAME"),lat,lng,spClass.getValue("ID")));
+                                myRef.child(spClass.getValue("CODE")).child(spClass.getValue("ID")).addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        setProgressBarGone();
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                        setProgressBarGone();
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                        setProgressBarGone();
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        setProgressBarGone();
+                                    }
+                                });
+
                                 showCodeDialog();
+
                             }
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             Toast.makeText(MainActivity.this, "Network issue", Toast.LENGTH_SHORT).show();
+                            setProgressBarGone();
                         }
                     });
 
-                }else
+                }else{
+                    setProgressBarGone();
                     Toast.makeText(MainActivity.this, "Check your Internet Connection", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -220,6 +288,18 @@ public class MainActivity extends AppCompatActivity
                 finish();
             }
         });
+
+    }
+
+    private void setProgressBarGone() {
+        progressBar.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    private void setProgressBarVisible() {
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
     }
 
@@ -388,12 +468,11 @@ public class MainActivity extends AppCompatActivity
             try {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies 1");
+                i.putExtra(Intent.EXTRA_SUBJECT, "Car Buddies");
 
                 String shareBody = "Now don't need to bother if you lost your friend's vehicle while driving just see in CAR BUDDIES app their exact location, if they are near or not \n\n\nThe best app to share your real-time location with friends while driving, where all of your friends can see each others location at the same time \n\nInstall the Android app \n";
                 shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
 
-//                String sAux = "https://www.ankit.com";
                 i.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(i, "choose one"));
             } catch(Exception e) {
