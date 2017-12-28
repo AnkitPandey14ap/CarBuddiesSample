@@ -6,6 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -23,6 +26,7 @@ import ankit.applespace.carbuddies.R;
 public class JoinActivity extends AppCompatActivity {
 
     SpClass sp;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class JoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join);
 
         sp=new SpClass(this);
+        progressBar=findViewById(R.id.progressBar3);
 
         final CodeInputView codeInput = findViewById(R.id.codeInput);
         codeInput.addOnCompleteListener(new OnCodeCompleteListener() {
@@ -37,19 +42,24 @@ public class JoinActivity extends AppCompatActivity {
             public void onCompleted(String code) {
                 //check if submitted code is right or wrong
 
-                if(isNetworkAvailable())
+                if(isNetworkAvailable()){
+                    setProgressBarVisible();
                     isCodeRight(code);
+                }
                 else{
                     Toast.makeText(JoinActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(JoinActivity.this,JoinActivity.class));
                 }
-
-
-
             }
         });
 
+
+    }
+    private void setProgressBarVisible() {
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
     }
 

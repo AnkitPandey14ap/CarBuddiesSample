@@ -24,4 +24,14 @@
         app:underline_width="@dimen/mtf_cardHeight_final"
         android:layout_centerHorizontal="true"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/codeInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

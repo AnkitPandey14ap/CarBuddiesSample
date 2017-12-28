@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity
                                     @Override
                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                         setProgressBarGone();
+
                                     }
 
                                     @Override
@@ -338,7 +339,7 @@ public class MainActivity extends AppCompatActivity
                             intent.putExtra(Intent.EXTRA_TEXT, code);
                             intent.putExtra("CODE",code);
 
-                            String shareBody="Hey, I want to share my live location with you! Please install the CAR BUDDIES app so that we can track each others location with best route between us \nAndroi: \n";
+                            String shareBody="Hey, I want to share my live location with you! Please install the CAR BUDDIES app so that we can track each other's location with best route between us \nAndroid: \n";
                             shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
 
                             shareBody =shareBody+"If already installed \n";
