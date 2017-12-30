@@ -164,6 +164,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerPointsNew.clear();
         mMap.clear();
 
+        TyperTextView connectionTV = findViewById(R.id.connectionTV);
+        connectionTV.animateText("Connected: "+users.size());
+//        connectionTV.setText("Connected: "+users.size());
+
         for (int i = 0; i < users.size(); i++) {
 
 //            Toast.makeText(this, "data changed", Toast.LENGTH_SHORT).show();

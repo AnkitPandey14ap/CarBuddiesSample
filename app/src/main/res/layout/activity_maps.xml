@@ -9,23 +9,50 @@ tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
 
 
 
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/rainbowTextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/connectionTV"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+
+            android:text="xxxxx"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:charIncrease="3"
+            app:typerSpeed="80" />
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/connectionTV"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Connection"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:charIncrease="3"
+            android:background="@color/colorPrimary" />
+
+
+    </LinearLayout>
+
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearlayout"/>
 
-    <com.hanks.htextview.typer.TyperTextView
-        android:id="@+id/rainbowTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="xxxxx"
-        android:textSize="30sp"
-        app:charIncrease="3"
-        app:typerSpeed="80"
-
-        android:background="@color/colorPrimary" />
 
 
 

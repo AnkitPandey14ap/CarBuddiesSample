@@ -435,19 +435,10 @@ public class MainActivity extends AppCompatActivity
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-//        String shareBody = "\nLet me recommend you this application\n\n";
-//        shareBody = shareBody+"http://www.my.app.com/launch"+"https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Car Buddies");
-
-//        shareBody =shareBody+ "http://www.ankit.applespace.carbuddies/login";
 
         String shareBody = "Now don't need to bother if you lost your friend's vehicle while driving just see their exact location in CAR BUDDIES app, if they are nearby or not \n\nThe best app to share your real-time location with friends while driving, where all your friends/family can see each other's location at the same time \n\nInstall the Android app \n";
         shareBody= shareBody + "https://play.google.com/store/apps/details?id=ankit.applespace.carbuddies \n\n";
-
-/*
-        shareBody=shareBody+"if Android app is already installed \n";
-        shareBody=shareBody+"http://www.ankit.applespace.carbuddies/login";
-*/
 
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 

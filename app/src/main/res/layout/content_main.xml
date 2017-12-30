@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:src="@drawable/ic_logo"/>
+        android:src="@drawable/user_icon"/>
     <TextView
         android:id="@+id/usernameTV"
         android:layout_width="wrap_content"
