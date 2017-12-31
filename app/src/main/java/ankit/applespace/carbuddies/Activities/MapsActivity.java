@@ -99,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean isLocationSet = false;
     private LocationManager locationManager;
 
+    User you=new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,11 +152,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child :    children) {
                     User user = child.getValue(User.class);
+
+                    //getting the current user data
+                    if(user.getID()==spClass.getValue("ID")){
+                        you = user;
+                    }
                     users.add(user);
                     Log.i(TAG, "onDataChange: "+users.size());
 
                 }
-
+/*
+                float[] results = new float[1];
+                for (int i = 0; i < users.size(); i++) {
+                    Location.distanceBetween(users.get(i).getLat(), users.get(i).getLng(),
+                            users.get(i).getLat(), users.get(i).getLat(),
+                            results);
+                }*/
                 updateRoute(users);
             }
 
@@ -168,7 +181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    //can delete this
+    //custome marker
     private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
 
         View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marker, null);
@@ -208,9 +221,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             LatLng point = new LatLng(users.get(i).getLat(),users.get(i).getLng());
 
+//            float[] results = new float[1];
+            float[] results = new float[1];
+            Log.i(TAG, "updateRoute: distance before: "+i+": "+results[0]);
+            Location.distanceBetween(users.get(i).getLat(), users.get(i).getLng(),
+                    you.getLat(), you.getLng(),
+                    results);
+
+            String distance;
+            if(results[0]>=1000){
+                results[0] =results[0]/1000;
+
+                distance = String.format("%.2f", results[0])+"Km";
+            }else {
+
+                distance = String.format("%.2f", results[0])+"m";
+            }
+
+
+
+
+            Log.i(TAG, "updateRoute: distance after: "+i+": "+results[0]);
+
             options.position(point);
             options.title(users.get(i).getName())
-            .snippet("connected")
+            .snippet(distance)
             .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_marker)));
 
 
