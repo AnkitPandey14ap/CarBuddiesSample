@@ -28,6 +28,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
@@ -80,6 +82,7 @@ import ankit.applespace.carbuddies.R;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
+    private static String mode="mode=driving";
     private GoogleMap mMap;
     private Marker mCurrLocationMarker;
     private GoogleApiClient mGoogleApiClient;
@@ -96,6 +99,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     SpClass spClass;
 
+    ImageView driving_mode;
+    ImageView cycling_mode;
+    ImageView walking_mode;
+
     boolean isLocationSet = false;
     private LocationManager locationManager;
 
@@ -108,6 +115,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        driving_mode = findViewById(R.id.driving_mode);
+        cycling_mode = findViewById(R.id.cycling_mode);
+        walking_mode = findViewById(R.id.walking_mode);
+
+        driving_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mode = "mode=driving";
+                updateRoute(users);
+            }
+        });
+        cycling_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mode = "mode=bicycling";
+                updateRoute(users);
+            }
+        });
+        walking_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mode = "mode=walking";
+                updateRoute(users);
+            }
+        });
+
+
 
         spClass = new SpClass(this);
         myRef=myRef.child(spClass.getValue("CODE"));
@@ -221,12 +256,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             LatLng point = new LatLng(users.get(i).getLat(),users.get(i).getLng());
 
-//            float[] results = new float[1];
             float[] results = new float[1];
-            Log.i(TAG, "updateRoute: distance before: "+i+": "+results[0]);
+
             Location.distanceBetween(users.get(i).getLat(), users.get(i).getLng(),
                     you.getLat(), you.getLng(),
                     results);
+
 
             String distance;
             if(results[0]>=1000){
@@ -237,11 +272,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 distance = String.format("%.2f", results[0])+"m";
             }
-
-
-
-
-            Log.i(TAG, "updateRoute: distance after: "+i+": "+results[0]);
 
             options.position(point);
             options.title(users.get(i).getName())
@@ -266,7 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-            LatLng o = new LatLng(users.get(0).getLat(), users.get(0).getLng());
+            LatLng origin = new LatLng(users.get(0).getLat(), users.get(0).getLng());
 
             // Checks, whether start and end locations are captured
             if (MarkerPointsNew.size() >= 1) {
@@ -274,18 +304,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng dest = new LatLng(users.get(i).getLat(), users.get(i).getLng());
 
                 // Getting URL to the Google Directions API
-                 String url = getUrl(o, dest);
-                    Log.d("onMapClick", url.toString());
+                 String url = getUrl(origin, dest);
+//                    Log.d("onMapClick", url.toString());
                     FetchUrl FetchUrl = new FetchUrl();
 
                     // Start downloading json data from Google Directions API
                     FetchUrl.execute(url);
 
-/*
-                //move map camera
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(o));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-*/
+
             }
 
 
@@ -486,7 +512,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String data = "";
 
             try {
-                // Fetching the data from web service
+                // Fetching the data from web service json file
                 data = downloadUrl(url[0]);
                 Log.d("Background Task data", data.toString());
             } catch (Exception e) {
@@ -568,6 +594,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i(TAG, "doInBackground: Ankit"+jObject);
 
                 routes = parser.parse(jObject);
+
                 Log.d("ParserTask","Executing routes");
                 Log.d("ParserTask",routes.toString());
 
@@ -606,8 +633,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
-                lineOptions.width(10);
-                lineOptions.color(Color.RED);
+                lineOptions.width(5);
+                if(mode=="mode=driving"){
+                    lineOptions.color(Color.BLUE);
+                }else if(mode=="mode=walking"){
+                    lineOptions.color(Color.GREEN);
+                }else{
+                    lineOptions.color(Color.RED);
+                }
+
 
                 Log.d("onPostExecute","onPostExecute lineoptions decoded");
 
@@ -636,7 +670,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String sensor = "sensor=false";
 
         // Building the parameters to the web service
-        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+        String parameters = str_origin+"&"+str_dest+"&"+sensor+"&"+mode;
 
         // Output format
         String output = "json";

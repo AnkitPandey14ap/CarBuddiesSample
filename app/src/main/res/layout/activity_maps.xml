@@ -41,7 +41,40 @@ tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:charIncrease="3"
             android:background="@color/colorPrimary" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/rg_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin">
+
+        <ImageView
+            android:id="@+id/driving_mode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_car"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/cycling_mode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_bike"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/walking_mode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_walk"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
@@ -51,7 +84,8 @@ tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearlayout"/>
+        android:layout_below="@+id/linearlayout"
+        android:layout_above="@+id/rg_mode"/>
 
 
 
