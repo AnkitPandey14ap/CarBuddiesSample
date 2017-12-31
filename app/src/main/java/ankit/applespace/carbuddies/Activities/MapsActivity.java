@@ -7,12 +7,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +25,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -160,17 +167,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    //can delete this
+    private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
+
+        View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marker, null);
+        ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.profile_image);
+        markerImageView.setImageResource(resId);
+        customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
+        customMarkerView.buildDrawingCache();
+        Bitmap returnedBitmap = Bitmap.createBitmap(customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        Drawable drawable = customMarkerView.getBackground();
+        if (drawable != null)
+            drawable.draw(canvas);
+        customMarkerView.draw(canvas);
+        return returnedBitmap;
+    }
+
     private void updateRoute(ArrayList<User> users) {
         MarkerPointsNew.clear();
         mMap.clear();
 
         TyperTextView connectionTV = findViewById(R.id.connectionTV);
-        connectionTV.animateText("Connected: "+users.size());
-//        connectionTV.setText("Connected: "+users.size());
+        connectionTV.animateText("Connected: "+String.valueOf(users.size()-1));
+//        connectionTV.setText("Connected: "+users.size()-1);
 
         for (int i = 0; i < users.size(); i++) {
-
-//            Toast.makeText(this, "data changed", Toast.LENGTH_SHORT).show();
 
             // Adding new item to the ArrayList
             MarkerPointsNew.add(users.get(i));
@@ -183,16 +209,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng point = new LatLng(users.get(i).getLat(),users.get(i).getLng());
 
             options.position(point);
-            options.title(users.get(i).getName());
+            options.title(users.get(i).getName())
+            .snippet("connected")
+            .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_marker)));
+
 
             /**
              * For the start location, the color of marker is GREEN and
              * for the end location, the color of marker is RED.
              */
             if (MarkerPointsNew.size() == 1) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+//                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             } else if (MarkerPointsNew.size() >= 2) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             }
 
 
@@ -379,12 +408,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+/*
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.flat(true);
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+*/
 
         if(!isLocationSet){
             isLocationSet = true;

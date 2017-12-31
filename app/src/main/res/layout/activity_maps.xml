@@ -28,7 +28,7 @@ tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
             android:gravity="center"
 
             android:text="xxxxx"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             app:charIncrease="3"
             app:typerSpeed="80" />
         <com.hanks.htextview.typer.TyperTextView
@@ -37,8 +37,8 @@ tools:context="ankit.applespace.carbuddies.Activities.MapsActivity" >
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Connection"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Connecting"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             app:charIncrease="3"
             android:background="@color/colorPrimary" />
 
