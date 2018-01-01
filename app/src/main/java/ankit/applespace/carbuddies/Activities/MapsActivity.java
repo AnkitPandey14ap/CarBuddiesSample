@@ -196,13 +196,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.i(TAG, "onDataChange: "+users.size());
 
                 }
-/*
-                float[] results = new float[1];
-                for (int i = 0; i < users.size(); i++) {
-                    Location.distanceBetween(users.get(i).getLat(), users.get(i).getLng(),
-                            users.get(i).getLat(), users.get(i).getLat(),
-                            results);
-                }*/
+
+
                 updateRoute(users);
             }
 
