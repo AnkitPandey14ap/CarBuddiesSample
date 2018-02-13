@@ -5,8 +5,3 @@ This app can come very handy in the following condition:
 1. When you are going to meet someone/friends at any location and need to follow-up their live-location.
 2. When you need to follow your friend/someone's vehicle then don't need to bother to lost their vehicle on the road, just see their location in Car Buddies.
 
-
-![Alt text](https://lh3.googleusercontent.com/QYpH5GLNVAZ8iEkTLMH3kKWlPDUzCj-X7HfkakMLT6TOTQzSXCZ7kJRnVLiADtO8y6IV=h900-rw?raw=true "Title")
-![Alt text](https://lh3.googleusercontent.com/QYpH5GLNVAZ8iEkTLMH3kKWlPDUzCj-X7HfkakMLT6TOTQzSXCZ7kJRnVLiADtO8y6IV=h900-rw?raw=true "Title")
-![Alt text](https://lh3.googleusercontent.com/QYpH5GLNVAZ8iEkTLMH3kKWlPDUzCj-X7HfkakMLT6TOTQzSXCZ7kJRnVLiADtO8y6IV=h900-rw?raw=true "Title")
-![Alt text](https://lh3.googleusercontent.com/QYpH5GLNVAZ8iEkTLMH3kKWlPDUzCj-X7HfkakMLT6TOTQzSXCZ7kJRnVLiADtO8y6IV=h900-rw?raw=true "Title")
