@@ -6,3 +6,5 @@ This app can come very handy in the following condition:
 2. When you need to follow your friend/someone's vehicle then don't need to bother to lost their vehicle on the road, just see their location in Car Buddies.
 
 
+![Alt text](/home/ankit/Desktop/final Video/Screenshot_2018-02-13-23-18-38-316_ankit.applespace.carbuddies.png?raw=true "Title")
+
